@@ -6,7 +6,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
 
 from sklearn.model_selection import cross_val_score, ShuffleSplit
-from sklearn.datasets import load_boston
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
@@ -19,8 +18,8 @@ warnings.simplefilter('ignore')
 df = pd.read_csv("NewData.csv")
 data =df.values
 
-scaler = MinMaxScaler()
-#scaler = StandardScaler()
+#scaler = MinMaxScaler()
+scaler = StandardScaler()
 result_feature = scaler.fit_transform(data[:,:19])
 result_label = data[:,19]
 result = np.append(result_feature, result_label.reshape(len(result_label),1), axis = 1)
@@ -39,17 +38,18 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 score = 'f1'
 
 param_dist = {
-        #'n_estimators':range(80,200,4),
-        #'max_depth':range(2,15,1),
-        'learning_rate':np.linspace(0.1,1,10),
-        #'subsample':np.linspace(0.7,0.9,20),
-        #'colsample_bytree':np.linspace(0.5,0.98,10),
-        #'min_child_weight':range(1,9,1),
+        'n_estimators':range(10,100,5),
+        'max_depth':range(2,15,1),
+        'learning_rate':np.linspace(0.2,1,5),
+        'subsample':np.linspace(0.6,0.9,10),
+        'colsample_bytree':np.linspace(0.5,0.98,10),
+        'min_child_weight':range(1,9,1),
         #'gpu_id':[0],
-        'tree_method':['gpu_hist']
+        #'tree_method':['gpu_hist'],
+        #"predictor":["gpu_predictor"]
         }
 
-clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(10, test_size = .1, train_size = .9), scoring='%s_macro' % score, n_jobs= 1)
+clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(10, test_size = .1, train_size = .9), scoring='%s_macro' % score, n_jobs= 5)
 
 clf.fit(X, Y)
 
