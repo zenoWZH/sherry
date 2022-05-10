@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import warnings
+import json
 
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
@@ -39,18 +40,20 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 score = 'f1'
 
 param_dist = {
-        #'n_estimators':range(80,200,4),
-        #'max_depth':range(2,15,1),
-        'learning_rate':np.linspace(0.1,1,10),
-        #'subsample':np.linspace(0.7,0.9,20),
-        #'colsample_bytree':np.linspace(0.5,0.98,10),
-        #'min_child_weight':range(1,9,1),
+        'n_estimators':range(10,100,5),
+        'max_depth':range(2,15,1),
+        'learning_rate':np.linspace(0.2,1,5),
+        'subsample':[1],
+        'colsample_bytree':[1],
+        'min_child_weight':range(1,9,1),
         #'gpu_id':[0],
-        'tree_method':['gpu_hist']
+        #'tree_method':['gpu_hist']
         }
 
-clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(10, test_size = .1, train_size = .9), scoring='%s_macro' % score, n_jobs= 1)
+clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(10, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 5)
 
 clf.fit(X, Y)
 
 print(clf.best_params_)
+with open("bestparams_xgb.json", "wb") as xgbjs:
+       json.dump(clf.best_params_, xgbjs)
