@@ -7,7 +7,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
 
 from sklearn.model_selection import cross_val_score, ShuffleSplit
-from sklearn.datasets import load_boston
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
@@ -20,8 +19,8 @@ warnings.simplefilter('ignore')
 df = pd.read_csv("NewData.csv")
 data =df.values
 
-scaler = MinMaxScaler()
-#scaler = StandardScaler()
+#scaler = MinMaxScaler()
+scaler = StandardScaler()
 result_feature = scaler.fit_transform(data[:,:19])
 result_label = data[:,19]
 result = np.append(result_feature, result_label.reshape(len(result_label),1), axis = 1)
