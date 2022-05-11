@@ -39,20 +39,20 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 score = 'f1'
 
 param_dist = {
-        'n_estimators':range(10,100,5),
-        'max_depth':range(2,15,1),
-        'learning_rate':np.linspace(0.2,1,5),
-        'subsample':[1],
-        'colsample_bytree':[1],
+        'n_estimators':range(20,80,5),
+        'max_depth':range(2,10,1),
+        'learning_rate':[0.01,0.1],
+        #'subsample':[1],
+        #'colsample_bytree':[1],
         'min_child_weight':range(1,9,1),
         #'gpu_id':[0],
         #'tree_method':['gpu_hist']
         }
 
-clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(10, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 5)
+clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 6)#, verbose=10)
 
 clf.fit(X, Y)
 
 print(clf.best_params_)
-with open("bestparams_xgb.json", "wb") as xgbjs:
-       json.dump(clf.best_params_, xgbjs)
+#with open("bestparams_xgb.json", "wb") as xgbjs:
+#       json.dump(clf.best_params_, xgbjs)
