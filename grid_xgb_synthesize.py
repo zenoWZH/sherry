@@ -42,7 +42,7 @@ param_dist = {
         'n_estimators':range(20,80,5),
         'max_depth':range(2,20,1),
         'learning_rate':[0.01,0.1],
-        #'subsample':[1],
+        'subsample':[1],
         #'colsample_bytree':[1],
         'min_child_weight':range(1,9,1),
         #'gpu_id':[0],
