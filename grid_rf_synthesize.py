@@ -38,7 +38,7 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 score = 'f1'
 
 param_dist = {'bootstrap': [True, False],
-              'max_depth': range(4,16),
+              'max_depth': range(4,20),
               'max_features': ['auto', 'sqrt'],
               'min_samples_leaf': [1, 2, 4],
               'min_samples_split': [2, 3, 4, 5, 7, 10],
