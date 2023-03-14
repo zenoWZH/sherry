@@ -49,7 +49,7 @@ param_dist = {
         #'tree_method':['gpu_hist']
         }
 
-clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 6)#, verbose=10)
+clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
 
 clf.fit(X, Y)
 

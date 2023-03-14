@@ -44,7 +44,7 @@ param_dist = {'bootstrap': [False],
               'min_samples_split': [2, 3, 4, 5, 7],
               'n_estimators': range(20,80,5)}
 
-clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 6)#, verbose=10)
+clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
 
 clf.fit(X, Y)
 

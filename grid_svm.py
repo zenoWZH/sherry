@@ -10,8 +10,7 @@ from sklearn.model_selection import cross_val_score, ShuffleSplit
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
-from xgboost import XGBClassifier
-from xgboost import plot_importance
+from sklearn.svm import SVC
 
 warnings.filterwarnings('ignore')
 warnings.simplefilter('ignore')
@@ -38,18 +37,11 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 
 score = 'f1'
 
-param_dist = {
-        'n_estimators':range(20,100,5),
-        'max_depth':range(2,10,1),
-        'learning_rate':[0.01,0.1],
-        #'subsample':[1],
-        #'colsample_bytree':[1],
-        'min_child_weight':range(1,9,1),
-        #'gpu_id':[0],
-        #'tree_method':['gpu_hist']
-        }
+param_dist = {'C': [0.1, 1, 10, 100, 1000], 
+              'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
+              'kernel': ['rbf', 'linear']}
 
-clf = GridSearchCV(XGBClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
+clf = GridSearchCV(SVC(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
 
 clf.fit(X, Y)
 
