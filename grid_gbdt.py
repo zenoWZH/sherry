@@ -10,7 +10,7 @@ from sklearn.model_selection import cross_val_score, ShuffleSplit
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 
 warnings.filterwarnings('ignore')
 warnings.simplefilter('ignore')
@@ -43,7 +43,7 @@ param_dist = {'max_depth': range(5,25,2),
               'min_samples_split': [2, 3, 4, 5, 7],
               'n_estimators': range(20,80,5)}
 
-clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
+clf = GridSearchCV(GradientBoostingClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
 
 clf.fit(X, Y)
 
