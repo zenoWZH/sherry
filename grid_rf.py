@@ -26,8 +26,8 @@ result = np.append(result_feature, result_label.reshape(len(result_label),1), ax
 df_newdata = pd.DataFrame(result, columns= df.columns)
 
 
-Y = df["Outcome"].values
-X = df[['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
+Y = df_newdata["Outcome"].values
+X = df_newdata[['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
        'SBP', 'DBP', 'PR', 'Drink', 'Smoke', 'FPG', 'AST', 'ALT', 'BUN', 'Scr',
        'TG', 'TC']].values
 names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',

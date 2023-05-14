@@ -10,24 +10,16 @@ from sklearn.model_selection import cross_val_score, ShuffleSplit
 
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
-from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
 
 warnings.filterwarnings('ignore')
 warnings.simplefilter('ignore')
 
-df = pd.read_csv("NewData.csv")
+df = pd.read_csv("../../data_synthesize/out/correlated_attribute_mode/sythetic_data.csv")
 data =df.values
 
-#scaler = MinMaxScaler()
-scaler = StandardScaler()
-result_feature = scaler.fit_transform(data[:,:18])
-result_label = data[:,18]
-result = np.append(result_feature, result_label.reshape(len(result_label),1), axis = 1)
-df_newdata = pd.DataFrame(result, columns= df.columns)
-
-
-Y = df_newdata["Outcome"].values
-X = df_newdata[['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
+Y = df["Outcome"].values
+X = df[['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
        'SBP', 'DBP', 'PR', 'Drink', 'Smoke', 'FPG', 'AST', 'ALT', 'BUN', 'Scr',
        'TG', 'TC']].values
 names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
@@ -37,11 +29,13 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 
 score = 'f1'
 
-param_dist = {'C': [0.1, 1, 10, 100, 1000], 
-              'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
-              'kernel': ['rbf', 'linear']}
+param_dist = {'max_depth': range(5,25,2),
+              'max_features': range(3,16),
+              'min_samples_leaf': [1, 2, 4],
+              'min_samples_split': [2, 3, 4, 5, 7],
+              'n_estimators': range(20,80,5)}
 
-clf = GridSearchCV(SVC(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
+clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
 
 clf.fit(X, Y)
 
