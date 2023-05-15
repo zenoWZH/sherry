@@ -31,14 +31,19 @@ score = 'f1'
 param_dist = {'bootstrap': [False, True],
               'max_depth': range(5,25,2),
               'max_features': range(3,16),
-              'min_samples_leaf': [1, 2, 4],
-              'min_samples_split': [2, 3, 4, 5, 7],
+              'min_samples_leaf': [1, 2, 4, 6, 8],
+              'min_samples_split': [2, 3, 4, 5, 6, 7, 8],
               'n_estimators': range(20,80,5)}
 
-clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
+with open("./bestparams_rf.json", "w") as xgbjs:
+       for i in range(10):
+              clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
 
-clf.fit(X, Y)
+              clf.fit(X, Y)
 
-print(clf.best_params_)
-#with open("bestparams_xgb.json", "wb") as xgbjs:
-#       json.dump(clf.best_params_, xgbjs)
+              print(clf.best_params_)
+              
+              json.dump(clf.best_params_, xgbjs)
+              xgbjs.write("\n")
+
+xgbjs.close()

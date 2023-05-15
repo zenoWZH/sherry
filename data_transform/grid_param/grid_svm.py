@@ -28,16 +28,22 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 
 
 
-score = 'f1'
+score = 'f1_macro'
 
-param_dist = {'C': [0.1, 1, 10, 100, 1000], 
-              'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
-              'kernel': ['rbf', 'linear']}
+param_dist = {'C': [0.1, 1, 5, 10, 20, 50, 80, 100, 200, 500, 1000], 
+              'gamma': ['scale', 'auto'],
+              #'kernel': ['rbf', 'linear', 'poly', 'sigmoid']}
+              'kernel': ['linear', 'poly']}
 
-clf = GridSearchCV(SVC(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
+with open("./bestparams_svm.json", "a") as xgbjs:
+       for i in range(10):
+              clf = GridSearchCV(SVC(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s' % score, n_jobs= 16)#, verbose=10)
 
-clf.fit(X, Y)
+              clf.fit(X, Y)
 
-print(clf.best_params_)
-#with open("bestparams_xgb.json", "wb") as xgbjs:
-#       json.dump(clf.best_params_, xgbjs)
+              print(clf.best_params_)
+              
+              json.dump(clf.best_params_, xgbjs)
+              xgbjs.write("\n")
+
+xgbjs.close()

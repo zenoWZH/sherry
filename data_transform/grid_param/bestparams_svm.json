@@ -1,0 +1,10 @@
+{'C': 50, 'gamma': 'scale', 'kernel': 'linear'}
+{'C': 20, 'gamma': 'scale', 'kernel': 'linear'}
+{'C': 20, 'gamma': 'auto', 'kernel': 'poly'}
+{'C': 100, 'gamma': 'scale', 'kernel': 'linear'}
+{'C': 5, 'gamma': 'scale', 'kernel': 'linear'}
+{'C': 1000, 'gamma': 'scale', 'kernel': 'linear'}
+{'C': 50, 'gamma': 'scale', 'kernel': 'linear'}
+{'C': 1000, 'gamma': 'auto', 'kernel': 'poly'}
+{'C': 1000, 'gamma': 'scale', 'kernel': 'linear'}
+{'C': 10, 'gamma': 'auto', 'kernel': 'poly'}
