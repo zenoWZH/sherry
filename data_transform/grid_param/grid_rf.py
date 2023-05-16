@@ -28,7 +28,7 @@ names = ['Gender', 'Age', 'Height', 'Weight', 'BMI', 'Hypertension',
 
 score = 'f1'
 
-param_dist = {'bootstrap': [False, True],
+param_dist = {'bootstrap': [True],
               'max_depth': range(5,25,2),
               'max_features': range(3,16),
               'min_samples_leaf': [1, 2, 4, 6, 8],
@@ -37,7 +37,7 @@ param_dist = {'bootstrap': [False, True],
 
 with open("./bestparams_rf.json", "w") as xgbjs:
        for i in range(10):
-              clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 8)#, verbose=10)
+              clf = GridSearchCV(RandomForestClassifier(), param_dist, cv=ShuffleSplit(5, test_size = .2, train_size = .8), scoring='%s_macro' % score, n_jobs= 16)#, verbose=10)
 
               clf.fit(X, Y)
 
